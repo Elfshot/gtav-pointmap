@@ -1,0 +1,17 @@
+{
+  "name": "expmap-2",
+  "version": "1.5.0",
+  "repository": "",
+  "description": "Revamp of Expmap- written in Leaflet w/ code from sadboilogan & supernova+",
+  "scripts": {
+    "dev": "bunx --bun vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^2.4.4"
+  },
+  "dependencies": {
+    "leaflet": "^1.7.1"
+  }
+}

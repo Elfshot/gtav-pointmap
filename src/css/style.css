@@ -1,0 +1,60 @@
+*{
+  margin: 0;
+  padding: 0;
+  scrollbar-color: #190455 rgba(92, 218, 218, 0.671);
+  scrollbar-width: thin;
+}
+body{
+  font-family: Tahoma, Geneva, sans-serif;
+  font-size: .8em;
+}
+#map {
+width: 2304px;
+height: 2304px;
+transform-origin: 50% 50%;
+-ms-transform-origin: 50% 50%; /* IE 9 */
+-webkit-transform-origin: 50% 50%; /* Safari and Chrome */
+-moz-transform-origin: 50% 50%; /* Firefox */
+-o-transform-origin: 50% 50%; /* Opera */
+}
+#mapImg, #mapCanvas, #dotList div, #blipList div, #ExpCard, #toggleSidebar, .monke, .warning{
+  position: absolute;
+}
+#mapImg:hover, #mapCanvas:hover{
+  cursor: grab;
+}
+.dot {
+  box-sizing: border-box;
+  position: absolute;
+  display: block;
+  transform: rotate(45deg) scale(var(--ggs,1));
+  width: 18px;
+  height: 18px;
+  border-radius: 100% 100% 0 100%;
+  border: 2px solid;
+  opacity: 80%;
+  cursor: pointer;
+}
+
+.p-head {
+  font-family: 'Roboto', sans-serif;
+  color: white;
+  text-shadow: 1px 1px black, 1px 1px 1px black, 1px 1px 1px black;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(92, 218, 218, 0.671);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(38, 44, 70, 0.712);
+  border-radius: 5px;
+  border-color: grey;
+}
+::-webkit-scrollbar-thumb:hover,  ::-webkit-scrollbar-thumb:active{
+  background: #190455;
+  box-shadow: 0px 0px 16px #2812e9;
+}

@@ -11,6 +11,7 @@ body{
 #map {
 width: 2304px;
 height: 2304px;
+background: #0CA8D0;
 transform-origin: 50% 50%;
 -ms-transform-origin: 50% 50%; /* IE 9 */
 -webkit-transform-origin: 50% 50%; /* Safari and Chrome */

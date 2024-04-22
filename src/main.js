@@ -2,6 +2,7 @@ import './css/style.css';
 import './css/leaflet@1.7.1.css';
 import './contzoom';
 import * as L from 'leaflet';
+import plot from './plot';
 
 L.CRS.Kebab = L.extend({}, L.CRS.Simple, {
   projection: {
@@ -48,3 +49,4 @@ L.tileLayer('images/maps/color-mode-tiles/{z}_{x}_{y}.jpg',{
 window.map = map;
 
 
+plot();

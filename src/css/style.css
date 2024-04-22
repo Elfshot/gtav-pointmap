@@ -17,7 +17,7 @@ transform-origin: 50% 50%;
 -moz-transform-origin: 50% 50%; /* Firefox */
 -o-transform-origin: 50% 50%; /* Opera */
 }
-#mapImg, #mapCanvas, #dotList div, #blipList div, #ExpCard, #toggleSidebar, .monke, .warning{
+#mapImg, #mapCanvas {
   position: absolute;
 }
 #mapImg:hover, #mapCanvas:hover{

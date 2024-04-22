@@ -1,10 +1,10 @@
 {
-  "name": "expmap-2",
-  "version": "1.5.0",
+  "name": "gtav-pointmap",
+  "version": "0.0.1",
   "repository": "",
-  "description": "Revamp of Expmap- written in Leaflet w/ code from sadboilogan & supernova+",
+  "description": "",
   "scripts": {
-    "dev": "bunx --bun vite",
+    "dev": "vite",
     "build": "vite build",
     "serve": "vite preview"
   },

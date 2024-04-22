@@ -5,4 +5,7 @@ export default {
     outDir: '../dist',
     minify: true,
   },
+  server: {
+    port: 5389
+  }
 };

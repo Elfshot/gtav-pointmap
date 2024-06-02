@@ -6,9 +6,11 @@
 //                      &startatfirst = 13
 //                      Can easily handle 300+ points assuming 7500 max chars
 // http://localhost:xxxx?points=[[xxxx.x,yyyy.y,imid],[xxxx.x,yyyy.y,imid]],...&shortestpath=1&startatfirst=1&zoom=1
-// presence of shortestpath creates a trace using nearest neighbour ?or convex hull? (nearest neighbour is faster at great distances)
-// presence of startatfirst will start the tracing at the first point supplied, otherwise any point
-// presence of zoom will fit to bounds
+// presence of shortestpath creates a looping trace using convex hull
+// presence of startatfirst will start a trace at the first point supplied to the last (no loop) [not implemented]
+// presence of zoom will fit viewport to the bounds of the points
+// presence of distance will display the route distance
+// [imid is unimplemented but intended to select icons for each point]
 
 import * as L from "leaflet";
 import { getIcon, getRandomColor } from "./utils";
@@ -16,6 +18,7 @@ import { getIcon, getRandomColor } from "./utils";
 export default function plot() {
   const map = window.map;
   const zoom = getQueryVariable("zoom") == "1";
+  const showcost = getQueryVariable("distance") == "1";
   const pointStr = getQueryVariable("points");
   if (!pointStr || pointStr.length <= 0) return;
 
@@ -39,10 +42,12 @@ export default function plot() {
     }
   }
 
-  const costele = document.createElement("h3");
-  document.body.appendChild(costele);
-  costele.innerText = `Route is ${cost}m`;
-  costele.className = "cost";
+  if (showcost) {
+    const costele = document.createElement("h3");
+    document.body.appendChild(costele);
+    costele.innerText = `Route is ${cost}m`;
+    costele.className = "cost";
+  }
 
   // add points to map
   let mostright = points[0][0];

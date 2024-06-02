@@ -10,8 +10,8 @@
 // presence of startatfirst will start the tracing at the first point supplied, otherwise any point
 // presence of zoom will fit to bounds
 
-import * as L from 'leaflet';
-import { getIcon, getRandomColor } from './utils';
+import * as L from "leaflet";
+import { getIcon, getRandomColor } from "./utils";
 
 export default function plot() {
   const map = window.map;
@@ -35,14 +35,14 @@ export default function plot() {
     for (let i = 0; i < path.length - 1; i++) {
       const current = path[i];
       const next = path[i + 1];
-      L.polyline([[current[0], current[1]], [next[0], next[1]]], { color: 'purple', weight: 4 }).addTo(window.map);
+      L.polyline([[current[0], current[1]], [next[0], next[1]]], { color: "purple", weight: 4 }).addTo(window.map);
     }
   }
 
   const costele = document.createElement("h3");
   document.body.appendChild(costele);
   costele.innerText = `Route is ${cost}m`;
-  costele.className = "cost"
+  costele.className = "cost";
 
   // add points to map
   let mostright = points[0][0];

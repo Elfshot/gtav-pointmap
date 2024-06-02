@@ -1,43 +1,43 @@
 module.exports = {
   root: true,
   env: {
-    'node': true
+    "node": true
   },
-  'parserOptions': {
-    'ecmaVersion': 2020,
-    'sourceType': 'module',
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module",
   },
-  ignorePatterns: ['webpack.config.js'],
+  ignorePatterns: ["webpack.config.js"],
   rules: {
-    'no-async-promise-executor': 'off',
-    'indent': [
-      'error',
+    "no-async-promise-executor": "off",
+    "indent": [
+      "error",
       2
     ],
-    'quotes': [
-      'error',
-      'single',
-      'avoid-escape'
+    "quotes": [
+      "error",
+      "double",
+      "avoid-escape"
     ],
-    'semi': [
-      'error',
-      'always'
+    "semi": [
+      "error",
+      "always"
     ],
-    'object-curly-spacing': [
-      'error', 
-      'always'
+    "object-curly-spacing": [
+      "error", 
+      "always"
     ],
-    'no-warning-comments': [
+    "no-warning-comments": [
       1, { 
-        'terms': [
-          'todo', 
-          'change',
-          'fixme', 
-          'fix',
-          'bug', 
-          'buggy',
+        "terms": [
+          "todo", 
+          "change",
+          "fixme", 
+          "fix",
+          "bug", 
+          "buggy",
         ],
-        'location': 'anywhere',
+        "location": "anywhere",
       }
     ]
   }

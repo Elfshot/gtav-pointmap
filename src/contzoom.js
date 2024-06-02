@@ -1,6 +1,6 @@
 // Fill in missing zoom levels of a tile layer with scaled previous zooms.
 // Written by Ilya Zverev, licensed WTFPL
-import * as L from 'leaflet';
+import * as L from "leaflet";
 
 L.TileLayer.mergeOptions({
   nativeZooms: [] // array of integers

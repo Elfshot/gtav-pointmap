@@ -7,7 +7,7 @@
 //                      Can easily handle 300+ points assuming 7500 max chars
 // http://localhost:xxxx?points=[[xxxx.x,yyyy.y,imid],[xxxx.x,yyyy.y,imid]],...&shortestpath=1&startatfirst=1&zoom=1
 // presence of shortestpath creates a looping trace using convex hull
-// presence of startatfirst will start a trace at the first point supplied to the last (no loop) [not implemented]
+// presence of lineartrace will start a trace at the first point supplied to the last (no loop) [not implemented]
 // presence of zoom will fit viewport to the bounds of the points
 // presence of distance will display the route distance
 // [imid is unimplemented but intended to select icons for each point]
@@ -24,15 +24,19 @@ export default function plot() {
 
   // [[xxxx.x,yyyy.y,imid], ...]
   const points = JSON.parse(getQueryVariable("points"));
-  let cost = "Lol idk.";
+  let cost = "0";
 
   if (getQueryVariable("shortestpath") == "1") {
-    if (getQueryVariable("startatfirst") == "1") {
-      // start at first point
-      // unimplemented
-    }
-
     const path = convexHull(Array.from(points));
+    cost = pathCost(path).toFixed(2);
+
+    for (let i = 0; i < path.length - 1; i++) {
+      const current = path[i];
+      const next = path[i + 1];
+      L.polyline([[current[0], current[1]], [next[0], next[1]]], { color: "purple", weight: 4 }).addTo(window.map);
+    }
+  } else if (getQueryVariable("lineartrace") == "1") {
+    const path = points;
     cost = pathCost(path).toFixed(2);
 
     for (let i = 0; i < path.length - 1; i++) {

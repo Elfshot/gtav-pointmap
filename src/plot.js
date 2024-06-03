@@ -27,13 +27,13 @@ export default function plot() {
   let cost = "0";
 
   if (getQueryVariable("shortestpath") == "1") {
-    const path = convexHull(Array.from(points));
+    const path = shortestDistance(Array.from(points));
     cost = pathCost(path).toFixed(2);
 
     for (let i = 0; i < path.length - 1; i++) {
       const current = path[i];
       const next = path[i + 1];
-      L.polyline([[current[0], current[1]], [next[0], next[1]]], { color: "purple", weight: 4 }).addTo(window.map);
+      L.polyline([[current[0], current[1]], [next[0], next[1]]], { color: "purple", weight: 4 }).addTo(map);
     }
   } else if (getQueryVariable("lineartrace") == "1") {
     const path = points;
@@ -42,7 +42,7 @@ export default function plot() {
     for (let i = 0; i < path.length - 1; i++) {
       const current = path[i];
       const next = path[i + 1];
-      L.polyline([[current[0], current[1]], [next[0], next[1]]], { color: "purple", weight: 4 }).addTo(window.map);
+      L.polyline([[current[0], current[1]], [next[0], next[1]]], { color: "purple", weight: 4 }).addTo(map);
     }
   }
 
@@ -70,14 +70,14 @@ export default function plot() {
     for (const point of points) {
       L.marker([point[0]+4,point[1]+4], {
         icon: getIcon(getRandomColor(), [25, 25])
-      }).addTo(window.map);
+      }).addTo(map);
     }
     map.fitBounds([[mostright, mostup], [mostleft, mostdown]]);
   } else {
     for (const point of points) {
       L.marker([point[0]+50,point[1]+10], {
         icon: getIcon(getRandomColor(), [15, 15])
-      }).addTo(window.map);
+      }).addTo(map);
     }
     map.flyTo([(mostright + mostleft)/2, (mostup + mostdown)/2], 5.3, {
       animate: false
@@ -91,6 +91,21 @@ export default function plot() {
   }
 }
 
+function shortestDistance(points) {
+  // initial points shouldn't be looping
+  const linkedPath = Array.from(points);
+  linkedPath.push(points[0]);
+
+  const linkedCost = pathCost(linkedPath);
+
+  const hullPath = convexHull(points);
+  const hullCost = pathCost(hullPath);
+
+  if (linkedCost <= hullCost) {
+    return linkedPath;
+  }
+  return hullPath;
+}
 
 function convexHull (points) {
   const firstPoints = points[0]; 

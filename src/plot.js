@@ -5,15 +5,19 @@
 //                      &shortestpath = 13
 //                      &startatfirst = 13
 //                      Can easily handle 300+ points assuming 7500 max chars
-// http://localhost:xxxx?points=[[xxxx.x,yyyy.y,imid],[xxxx.x,yyyy.y,imid]],...&shortestpath=1&startatfirst=1&zoom=1
+// http://localhost:xxxx?points=[[xxxx.x,yyyy.y,imix],[xxxx.x,yyyy.y,imix],...]&images=["id","id","id",...]&shortestpath=1&startatfirst=1&zoom=1
+// within points, imix is the index of the point's image in the images array
+// the ids within the images array are openmoji ids.
+//      Ex. https://openmoji.org/library/emoji-1F9DD = 1F9DD
+//      Ex. https://openmoji.org/library/emoji-1F9DD-200D-2640-FE0F/#variant=1F9DD-1F3FC-200D-2640-FE0F = 1F9DD-1F3FC-200D-2640-FE0F
+//      Ex. points=[[0,200,0],[-200,100,1],[200,-100,0]]&images=["1F9DD","1F9DD-1F3FC-200D-2640-FE0F"]
 // presence of shortestpath creates a looping trace using convex hull
-// presence of lineartrace will start a trace at the first point supplied to the last (no loop) [not implemented]
+// presence of lineartrace will start a trace at the first point supplied to the last (no loop)
 // presence of zoom will fit viewport to the bounds of the points
 // presence of distance will display the route distance
-// [imid is unimplemented but intended to select icons for each point]
 
 import * as L from "leaflet";
-import { getIcon, getRandomColor } from "./utils";
+import { getIcon, getOpenmoji, getRandomColor } from "./utils";
 
 export default function plot() {
   const map = window.map;
@@ -24,6 +28,9 @@ export default function plot() {
 
   // [[xxxx.x,yyyy.y,imid], ...]
   const points = JSON.parse(getQueryVariable("points"));
+
+  const imagesStr = getQueryVariable("images") || '';
+  const images = imagesStr.length >= 3? JSON.parse(getQueryVariable("images")): [];
   let cost = "0";
 
   if (getQueryVariable("shortestpath") == "1") {
@@ -66,19 +73,30 @@ export default function plot() {
     if (point[1] > mostup) mostup = point[1];
   }
 
-  if (zoom) {
-    for (const point of points) {
-      L.marker([point[0]+4,point[1]+4], {
-        icon: getIcon(getRandomColor(), [25, 25])
-      }).addTo(map);
+  for (const point of points) {
+    let image = '';
+    let size = [];
+    let offsetx = 0;
+    let offsety = 0;
+    if (point?.[2] >= 0 && (images.length - 1) >= point[2]) {
+      image = getOpenmoji(images[point[2]]);
+      size = [50, 50];
+      offsety = 25;
+      offsetx = -2;
+    } else {
+      image = getRandomColor()
+      size = [20, 20];
+      offsetx, offsety = 4;
     }
+
+    L.marker([point[0]+offsetx,point[1]+offsety], {
+      icon: getIcon(image, size)
+    }).addTo(map);
+  }
+
+  if (zoom) {
     map.fitBounds([[mostright, mostup], [mostleft, mostdown]]);
   } else {
-    for (const point of points) {
-      L.marker([point[0]+50,point[1]+10], {
-        icon: getIcon(getRandomColor(), [15, 15])
-      }).addTo(map);
-    }
     map.flyTo([(mostright + mostleft)/2, (mostup + mostdown)/2], 5.3, {
       animate: false
     });
@@ -219,7 +237,7 @@ function getQueryVariable(variable) {
   for (var i=0;i<vars.length;i++) {
     var pair = vars[i].split("=");
     if (pair[0] == variable) {
-      return pair[1];
+      return decodeURI(pair[1]);
     }
   } 
   return null;

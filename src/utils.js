@@ -5,6 +5,10 @@ export function getRandomColor() {
   return `images/emotes/${colors[Math.floor(Math.random() * colors.length)]}.png`;
 }
 
+export function getOpenmoji(mojiId) {
+  return `open_emoji/${mojiId}.svg`;
+}
+
 export function getIcon(url, size, shawdowUrl, shadowsize) {
   const icon = L.icon({
     iconUrl: url,
